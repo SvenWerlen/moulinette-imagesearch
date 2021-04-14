@@ -1,0 +1,37 @@
+.mtte .list .gameicon {
+  display:flex;
+  align-items:center;
+  padding-left: 3px;
+  min-height: 22px;
+}
+
+.mtte .list .gameicon.alt {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.mtte .gameicon .label { 
+  width: 450px;
+  padding-left: 5px;
+}
+
+.mtte .list .gameicon:hover {
+  background-color: #666;
+  color: #eee;
+}
+
+.mtte .gameicon img {
+  width: 32px;
+  margin: 2px 0px;
+}
+
+.mtte .options {
+  padding: 8px;
+}
+
+.mtte .options input[type="color"] {
+  max-width: 44px;
+}
+
+.mtte .options .label {
+  padding: 0px 3px;
+}
