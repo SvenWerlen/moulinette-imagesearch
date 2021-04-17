@@ -1,0 +1,14 @@
+.mtte.forge .imageresult {
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.mtte.forge .imageresult:hover {
+  opacity: 50%;
+}
+
+.mtte .imageresult img {
+  object-fit: contain;
+  border: none;
+  margin: 2px;
+}

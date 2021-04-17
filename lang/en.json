@@ -1,16 +1,19 @@
 {
-  "mtte.gameIcons": "Icons",
-  "mtte.gameIconsDescription": "Instructions : check all icons you want Moulinette to forge.",
-  "mtte.backgroundColor": "Background color",
-  "mtte.foregroundColor": "Foreground color",
-  "mtte.forgingGameIconsSuccess": "Images were successfully forged! Path to folder was copied into your clipboard.",
-  "mtte.forge": "Forge!",
-  "mtte.forgeToolTip": "Forge the selected items",
-  "mtte.clearAction": "Unselect all",
-  "mtte.clearActionToolTip": "Unselects all checkboxes",
-  "mtte.selectAllAction": "Select all",
-  "mtte.selectAllActionToolTip": "Selects all checkboxes",
-  "mtte.installingGameIcons": "Installing...",
-  
-  "mtte.END": ""
+  "mtte.confirm": "Confirm",
+  "mtte.createArticle": "Create article",
+  "mtte.createArticleToolTip": "Generates an article based on the image",
+  "mtte.downloadImage": "Download",
+  "mtte.downloadImageToolTip": "Download image into Foundry VTT",
+  "mtte.enterImageURL": "Specify URL to image",
+  "mtte.enterImageURLDescription": "Moulinette has not been able to extract a valid image URL from your clipboard. Please specify below.",
+  "mtte.fromClipboard": "From clipboard",
+  "mtte.imageFrom": "Image from",
+  "mtte.imageSearch": "Image search",
+  "mtte.imageSearchDescription": "Instructions : search then click for action",
+  "mtte.imageSize": "Image size",
+  "mtte.imageURL": "Image URL",
+  "mtte.pasteURL": "Import image from URL (and create article)",
+  "mtte.searchBy": "Search provided by Microsoft Bing",
+  "mtte.searchByCustom": "Image was manually provided (from Clipboard)",
+  "mtte.searchresult": "Search result"
 }

@@ -1,0 +1,19 @@
+{
+  "mtte.confirm": "Confirmer",
+  "mtte.createArticle": "Cr\u00e9er article",
+  "mtte.createArticleToolTip": "G\u00e9n\u00e8re un article bas\u00e9 sur l'image",
+  "mtte.downloadImage": "T\u00e9l\u00e9charger",
+  "mtte.downloadImageToolTip": "T\u00e9l\u00e9charger l'image dans Foundry VTT",
+  "mtte.enterImageURL": "Sp\u00e9cifier l'adresse (URL) de l'image",
+  "mtte.enterImageURLDescription": "Moulinette n'a pas \u00e9t\u00e9 capable d'extraire une adresse (URL) valide de votre presse-papier. Veuillez en sp\u00e9cifier une ci-dessous.",
+  "mtte.fromClipboard": "Depuis presse-papier",
+  "mtte.imageFrom": "Image de",
+  "mtte.imageSearch": "Rech. image",
+  "mtte.imageSearchDescription": "Instructions : rechercher et cliquer pour action",
+  "mtte.imageSize": "Taille de l'image",
+  "mtte.imageURL": "URL de l'image",
+  "mtte.pasteURL": "Importer l'image depuis son adresse (URL) et cr\u00e9er un article",
+  "mtte.searchBy": "Recherche par Microsoft Bing",
+  "mtte.searchByCustom": "Image fournie manuellement (depuis le presse-papier)",
+  "mtte.searchresult": "R\u00e9sultat de la recherche"
+}
