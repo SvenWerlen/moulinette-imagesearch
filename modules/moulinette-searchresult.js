@@ -33,7 +33,7 @@ export class MoulinetteSearchResult extends FormApplication {
     // download & upload image
     const headers = { method: "POST", headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({ url: this.data.url }) }
     const res = await fetch(game.moulinette.applications.MoulinetteClient.SERVER_URL + "/search/download", headers).catch(function(e) {
-      ui.notifications.error(game.i18n.localize("ERROR.mtteDownloadTimeout"));
+      ui.notifications.error(game.i18n.localize("mtte.errorDownloadTimeout"));
       console.log(`Moulinette | Cannot download image ${svg}`, e)
       return;
     });

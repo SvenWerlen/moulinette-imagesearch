@@ -6,6 +6,7 @@
   "mtte.downloadImageToolTip": "T\u00e9l\u00e9charger l'image dans Foundry VTT",
   "mtte.enterImageURL": "Sp\u00e9cifier l'adresse (URL) de l'image",
   "mtte.enterImageURLDescription": "Moulinette n'a pas \u00e9t\u00e9 capable d'extraire une adresse (URL) valide de votre presse-papier. Veuillez en sp\u00e9cifier une ci-dessous.",
+  "mtte.errorDownloadTimeout": "L'h\u00e9bergeur de l'image ne r\u00e9ponde pas. Veuillez r\u00e9essayer plus tard!",
   "mtte.fromClipboard": "Depuis presse-papier",
   "mtte.imageFrom": "Image de",
   "mtte.imageSearch": "Rech. image",

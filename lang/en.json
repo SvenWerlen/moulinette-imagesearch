@@ -6,6 +6,7 @@
   "mtte.downloadImageToolTip": "Download image into Foundry VTT",
   "mtte.enterImageURL": "Specify URL to image",
   "mtte.enterImageURLDescription": "Moulinette has not been able to extract a valid image URL from your clipboard. Please specify below.",
+  "mtte.errorDownloadTimeout": "Website hosting the image didn't respond. Try again later!",
   "mtte.fromClipboard": "From clipboard",
   "mtte.imageFrom": "Image from",
   "mtte.imageSearch": "Image search",
