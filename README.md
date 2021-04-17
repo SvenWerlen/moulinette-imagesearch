@@ -1,4 +1,4 @@
-# Moulinette Forge Game Icons (Foundry VTT)
+# Moulinette Forge Image Search (Foundry VTT)
 
 [![GitHub tags (latest by date)](https://img.shields.io/github/v/tag/SvenWerlen/moulinette-imagesearch)](https://github.com/SvenWerlen/moulinette-imagesearch/releases)
 [![License](https://img.shields.io/github/license/SvenWerlen/moulinette-imagesearch)](https://github.com/SvenWerlen/moulinette-imagesearch/blob/main/LICENSE.txt)
