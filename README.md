@@ -1,7 +1,7 @@
 # Moulinette Forge Game Icons (Foundry VTT)
 
 [![GitHub tags (latest by date)](https://img.shields.io/github/v/tag/SvenWerlen/moulinette-imagesearch)](https://github.com/SvenWerlen/moulinette-imagesearch/releases)
-[![License](https://img.shields.io/github/license/SvenWerlen/moulinette-imagesearch)](https://github.com/SvenWerlen/moulinette-imagesearch/LICENSE.txt)
+[![License](https://img.shields.io/github/license/SvenWerlen/moulinette-imagesearch)](https://github.com/SvenWerlen/moulinette-imagesearch/blob/main/LICENSE.txt)
 [![GitHub Download](https://img.shields.io/badge/foundryvtt-Download-important)](#install)
 ![Tested on forge-vtt.com](https://img.shields.io/badge/Forge-supported-success)
 [![Support me on Patreon](https://img.shields.io/badge/patreon-Support%20me-informational)](https://www.patreon.com/moulinette)
