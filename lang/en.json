@@ -1,12 +1,18 @@
 {
+  "mtte.actor": "Actor",
+  "mtte.article": "Article",
   "mtte.confirm": "Confirm",
   "mtte.createArticle": "Create article",
   "mtte.createArticleToolTip": "Generates an article based on the image",
   "mtte.downloadImage": "Download",
   "mtte.downloadImageToolTip": "Download image into Foundry VTT",
+  "mtte.dropmode": "Drag & drop mode",
+  "mtte.dropmodeDisabled": "Drag & drop disabled. Please install submodule \"Moulinette Tiles\" to enable it",
+  "mtte.dropmodeToolTip": "Choose what kind of asset will be generated",
   "mtte.enterImageURL": "Specify URL to image",
   "mtte.enterImageURLDescription": "Moulinette has not been able to extract a valid image URL from your clipboard. Please specify below.",
   "mtte.errorDownloadTimeout": "Website hosting the image didn't respond. Try again later!",
+  "mtte.errorDragDropRequirements": "Drag & Drop capability requires submodule 'Moulinette Tiles'",
   "mtte.fromClipboard": "From clipboard",
   "mtte.imageFrom": "Image from",
   "mtte.imageSearch": "Image search",
@@ -16,5 +22,6 @@
   "mtte.pasteURL": "Import image from URL (and create article)",
   "mtte.searchBy": "Search provided by Microsoft Bing",
   "mtte.searchByCustom": "Image was manually provided (from Clipboard)",
-  "mtte.searchresult": "Search result"
+  "mtte.searchresult": "Search result",
+  "mtte.tile": "Tile"
 }

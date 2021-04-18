@@ -1,12 +1,18 @@
 {
+  "mtte.actor": "Acteur",
+  "mtte.article": "Article",
   "mtte.confirm": "Confirmer",
   "mtte.createArticle": "Cr\u00e9er article",
   "mtte.createArticleToolTip": "G\u00e9n\u00e8re un article bas\u00e9 sur l'image",
   "mtte.downloadImage": "T\u00e9l\u00e9charger",
   "mtte.downloadImageToolTip": "T\u00e9l\u00e9charger l'image dans Foundry VTT",
+  "mtte.dropmode": "Mode glisser-d\u00e9poser",
+  "mtte.dropmodeDisabled": "Glisser/d\u00e9poser d\u00e9sactiv\u00e9. Veuillez installer le sous-module \"Moulinette Tiles\" pour l'activer",
+  "mtte.dropmodeToolTip": "Choisir quel type d'\u00e9l\u00e9ment sera cr\u00e9\u00e9 lors d'un glisser-d\u00e9poser",
   "mtte.enterImageURL": "Sp\u00e9cifier l'adresse (URL) de l'image",
   "mtte.enterImageURLDescription": "Moulinette n'a pas \u00e9t\u00e9 capable d'extraire une adresse (URL) valide de votre presse-papier. Veuillez en sp\u00e9cifier une ci-dessous.",
   "mtte.errorDownloadTimeout": "L'h\u00e9bergeur de l'image ne r\u00e9ponde pas. Veuillez r\u00e9essayer plus tard!",
+  "mtte.errorDragDropRequirements": "Les fonctionalit\u00e9s de Glisser-D\u00e9poser requi\u00e8rent le sous-module 'Moulinette Tiles'",
   "mtte.fromClipboard": "Depuis presse-papier",
   "mtte.imageFrom": "Image de",
   "mtte.imageSearch": "Rech. image",
@@ -16,5 +22,6 @@
   "mtte.pasteURL": "Importer l'image depuis son adresse (URL) et cr\u00e9er un article",
   "mtte.searchBy": "Recherche par Microsoft Bing",
   "mtte.searchByCustom": "Image fournie manuellement (depuis le presse-papier)",
-  "mtte.searchresult": "R\u00e9sultat de la recherche"
+  "mtte.searchresult": "R\u00e9sultat de la recherche",
+  "mtte.tile": "Tuile"
 }
