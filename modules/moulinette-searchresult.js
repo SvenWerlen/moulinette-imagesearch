@@ -5,7 +5,7 @@ export class MoulinetteSearchResult extends FormApplication {
   
   constructor(data) {
     super()
-    this.data = data;   
+    this.data = data;
   }
   
   static get defaultOptions() {

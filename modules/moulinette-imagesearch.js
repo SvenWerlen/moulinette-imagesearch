@@ -5,6 +5,8 @@ import { MoulinetteSearchResult } from "./moulinette-searchresult.js"
  */
 export class MoulinetteImageSearch extends game.moulinette.applications.MoulinetteForgeModule {
 
+  static SEARCH_API = "https://api.bing.microsoft.com/v7.0/images/search"
+  
   constructor() {
     super()
   }
@@ -15,24 +17,50 @@ export class MoulinetteImageSearch extends game.moulinette.applications.Moulinet
   async getAssetList(searchTerms) {
     let assets = []
     
+    const bingKey = game.settings.get("moulinette-imagesearch", "bing-key")
+    if(!bingKey || bingKey.length == 0) {
+      assets.push(`<div class="error">${game.i18n.localize("mtte.noBingKey")}</div>`)
+      return assets;
+    }
+    
     if(!searchTerms || searchTerms.length == 0) {
       return []
     }
     
-    console.log("Moulinette ImageSearch | Searching images... " +searchTerms)
+    console.log("Moulinette ImageSearch | Searching images... " + searchTerms)
     
     // execute search
-    let client = new game.moulinette.applications.MoulinetteClient()
-    let result = await client.post("/search", { query: searchTerms })
-    if( result && result.status == 200 ) {
-      let html = ""
-      this.searchResults = result.data.results;
-      let idx = 0;
-      result.data.results.forEach( r => {
-        idx++
-        assets.push(`<div class="imageresult draggable" title="${r.name}" data-idx="${idx}"><img width="100" height="100" src="${r.thumb}"/></div>`)
-      })
+    let header = {
+      method: "GET",
+      headers: {"Ocp-Apim-Subscription-Key" : bingKey},
     }
+    const params = new URLSearchParams({
+      q: searchTerms,
+      imageType: "photo",
+      count: 150
+    })
+    
+    const response = await fetch(`${MoulinetteImageSearch.SEARCH_API}?${params}`, header).catch(function(e) {
+      console.log(`MoulinetteClient | Cannot establish connection to server ${MoulinetteImageSearch.SEARCH_API}`, e)
+    });
+  
+    if( !response || response.status != 200 ) {
+      console.error("MoulinetteImageSearch | Invalid response from Bing API", response)
+      return assets;
+    }
+    
+    
+    let data = await response.json()
+    
+    this.searchResults = []
+    data.value.forEach( r => this.searchResults.push({ name: r.name, thumb: r.thumbnailUrl, url: r.contentUrl, page: r.hostPageUrl, width: r.width, height: r.height, format: r.encodingFormat}));
+    
+    let html = ""
+    let idx = 0;
+    this.searchResults.forEach( r => {
+      idx++
+      assets.push(`<div class="imageresult draggable" title="${r.name}" data-idx="${idx}"><img width="100" height="100" src="${r.thumb}"/></div>`)
+    })
   
     return assets
   }

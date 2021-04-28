@@ -1,6 +1,8 @@
 {
-  "mtte.actor": "Actor",
+  "mtte.actor": "Token",
   "mtte.article": "Article",
+  "mtte.configBingKey": "Bing Search API key",
+  "mtte.configBingKeyHint": "You have to provide your own Bing Search API key. Check documentation for more details",
   "mtte.confirm": "Confirm",
   "mtte.createArticle": "Create article",
   "mtte.createArticleToolTip": "Generates an article based on the image",
@@ -19,6 +21,7 @@
   "mtte.imageSearchDescription": "Instructions : search then click for action",
   "mtte.imageSize": "Image size",
   "mtte.imageURL": "Image URL",
+  "mtte.noBingKey": "To search images, you need to configure Bing Search API key first",
   "mtte.pasteURL": "Import image from URL (and create article)",
   "mtte.searchBy": "Search provided by Microsoft Bing",
   "mtte.searchByCustom": "Image was manually provided (from Clipboard)",

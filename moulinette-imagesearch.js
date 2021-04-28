@@ -2,6 +2,15 @@
 Hooks.once("init", async function () {
   console.log("Moulinette ImageSearch | Init") 
   game.settings.register("moulinette", "tileMode", { scope: "world", config: false, type: String, default: "tile" })
+  
+  game.settings.register("moulinette-imagesearch", "bing-key", {
+    name: game.i18n.localize("mtte.configBingKey"), 
+    hint: game.i18n.localize("mtte.configBingKeyHint"), 
+    scope: "world",
+    config: true,
+    default: "",
+    type: String
+  });
 })
 
 /**
