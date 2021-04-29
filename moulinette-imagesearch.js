@@ -41,24 +41,3 @@ Hooks.once("ready", async function () {
     console.log("Moulinette ImageSearch | Module loaded")
   }
 });
-
-
-/**
- * Manage canvas dr
- */
-Hooks.on('dropCanvasData', (canvas, data) => { 
-  if(data.source == "mtte-search") {
-    console.log("here")
-    /*
-    if(data.type == "JournalEntry") {
-      import("./modules/moulinette-tiles.js").then( c => {
-        c.MoulinetteTiles.createArticle(data)
-      })
-      return false;
-    }
-    else if(data.type == "Actor") {
-      new MoulinetteDropAsActor(data).render(true)
-      return false;
-    }*/
-  }
-});

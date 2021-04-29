@@ -37,7 +37,7 @@ export class MoulinetteSearchResult extends FormApplication {
     // create article if requested
     if(event.submitter.className == "createArticle") {
       ui.journal.activate() // give focus to journal
-      const article = await JournalEntry.create( {name: data.name, img: data.filepath} )
+      const article = await JournalEntry.create( {name: data.name, img: game.moulinette.applications.MoulinetteFileUtil.getBaseURL() + data.filepath} )
       article.sheet.render(true)
     }
   }
@@ -53,24 +53,25 @@ export class MoulinetteSearchResult extends FormApplication {
     const mode = game.settings.get("moulinette", "tileMode")
     this._downloadFile();
     const img = this._getImageDetails();
+    const filepath = game.moulinette.applications.MoulinetteFileUtil.getBaseURL() + img.filepath
     
     let dragData = {}
     if(mode == "tile") {
       dragData = {
         type: "Tile",
-        img: img.filepath,
+        img: filepath,
         tileSize: 100
       };
     } else if(mode == "article") {
       dragData = {
         type: "JournalEntry",
         name: img.name,
-        img: img.filepath
+        img: filepath
       };
     } else if(mode == "actor") {
       dragData = {
         type: "Actor",
-        img: img.filepath
+        img: filepath
       };
     }    
     dragData.source = "mtte"
@@ -86,9 +87,9 @@ export class MoulinetteSearchResult extends FormApplication {
   _getImageDetails() {
     let imageName = this.data.name
     if(!this.data.format) {
-      this.data.format = blob.type.split('/').pop()
+      this.data.format = ".jpg" // just a guess to avoid issue during upload
     }
-    const imageFileName = imageName.replace(/[\W_]+/g,"-") + "." + this.data.format
+    const imageFileName = imageName.replace(/[\W_]+/g,"-").replace(".","") + "." + this.data.format
     return { name: imageName, filename: imageFileName, filepath: "moulinette/images/search/" + imageFileName }
   }
   

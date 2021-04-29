@@ -134,7 +134,7 @@ export class MoulinetteImageSearch extends game.moulinette.applications.Moulinet
           
     const image = this.searchResults[idx-1]
     const imageName = `${image.name}.${image.format}`
-    const filePath = "moulinette/images/search/" + imageName
+    const filePath = game.moulinette.applications.MoulinetteFileUtil.getBaseURL() + "moulinette/images/search/" + imageName
 
     // download & upload image
     const headers = { method: "POST", headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({ url: image.url }) }
@@ -190,10 +190,12 @@ export class MoulinetteImageSearch extends game.moulinette.applications.Moulinet
             }
         });
       }
+      
+      const dateAsString = new Date().toLocaleDateString("en-US", { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' })
       const data = {
         custom: true,
         noSize: true,
-        name: game.i18n.localize("mtte.fromClipboard"),
+        name: game.i18n.format("mtte.fromClipboard", { date: dateAsString }),
         page: text,
         thumb: text,
         url: text,
