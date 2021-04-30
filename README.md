@@ -29,7 +29,7 @@ The following steps assume that you have a basic undestanding of Microsoft Azure
 * Click "Create"
   * Enter a name for your service
   * Select your existing subscription
-  * Choose a pricing tier according to your needs
+  * Choose a pricing tier according to your needs (Free tier should fit in most cases)
   * Choose an existing Resource Group or create a new
   * Check the box to confirm conditions
   * Create
