@@ -133,8 +133,9 @@ export class MoulinetteImageSearch extends game.moulinette.applications.Moulinet
     if(!this.searchResults || idx < 0 || idx > this.searchResults.length) return
           
     const image = this.searchResults[idx-1]
-    const imageName = `${image.name}.${image.format}`
-    const filePath = game.moulinette.applications.MoulinetteFileUtil.getBaseURL() + "moulinette/images/search/" + imageName
+    const imageName = `${image.name}`
+    const imageFileName = image.name.replace(/[\W_]+/g,"-").replace(".","") + "." + image.format
+    const filePath = game.moulinette.applications.MoulinetteFileUtil.getBaseURL() + "moulinette/images/search/" + imageFileName
 
     // download & upload image
     const headers = { method: "POST", headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({ url: image.url }) }
@@ -143,7 +144,7 @@ export class MoulinetteImageSearch extends game.moulinette.applications.Moulinet
       console.log(`Moulinette | Cannot download image ${image.url}`, e)
       return;
     }).then( res => {
-      res.blob().then( blob => game.moulinette.applications.MoulinetteFileUtil.upload(new File([blob], imageName, { type: blob.type, lastModified: new Date() }), imageName, "moulinette/images/", `moulinette/images/search/`, false) )
+      res.blob().then( blob => game.moulinette.applications.MoulinetteFileUtil.upload(new File([blob], imageFileName, { type: blob.type, lastModified: new Date() }), imageFileName, "moulinette/images/", `moulinette/images/search/`, false) )
     });
 
     let dragData = {}
