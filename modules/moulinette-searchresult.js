@@ -89,7 +89,10 @@ export class MoulinetteSearchResult extends FormApplication {
     if(!this.data.format) {
       this.data.format = ".jpg" // just a guess to avoid issue during upload
     }
-    const imageFileName = imageName.replace(/[\W_]+/g,"-").replace(".","") + "." + this.data.format
+    const timestamp =  new Date().getTime();
+    let imageFileName = imageName.replace(/[\W_]+/g,"-").replace(".","")
+    imageFileName = (imageFileName.length > 30 ? imageFileName.substring(0, 30) : imageFileName) + "-" + timestamp + "." + this.data.format
+    
     return { name: imageName, filename: imageFileName, filepath: "moulinette/images/search/" + imageFileName }
   }
   

@@ -23,7 +23,7 @@
   "mtte.imageURL": "Image URL",
   "mtte.noBingKey": "In order to search images, you first need to configure Bing Search API key",
   "mtte.pasteURL": "Import image from URL (and create article)",
-  "mtte.searchBy": "Search provided by Microsoft Bing",
+  "mtte.searchBy": "Search provided by",
   "mtte.searchByCustom": "Image was manually provided (from Clipboard)",
   "mtte.searchresult": "Search result",
   "mtte.tile": "Tile"

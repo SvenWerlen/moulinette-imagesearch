@@ -23,7 +23,7 @@
   "mtte.imageURL": "URL de l'image",
   "mtte.noBingKey": "Pour effectuer des recherches d'images, vous devez d'abord configurer votre cl\u00e9 d'API Bing",
   "mtte.pasteURL": "Importer l'image depuis son adresse (URL) et cr\u00e9er un article",
-  "mtte.searchBy": "Recherche par Microsoft Bing",
+  "mtte.searchBy": "Recherche par",
   "mtte.searchByCustom": "Image fournie manuellement (depuis le presse-papier)",
   "mtte.searchresult": "R\u00e9sultat de la recherche",
   "mtte.tile": "Tuile"

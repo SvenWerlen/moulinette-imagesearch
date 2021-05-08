@@ -5,20 +5,93 @@ import { MoulinetteSearchResult } from "./moulinette-searchresult.js"
  */
 export class MoulinetteImageSearch extends game.moulinette.applications.MoulinetteForgeModule {
 
-  static SEARCH_API = "https://api.bing.microsoft.com/v7.0/images/search"
+  static SEARCH_BING_API = "https://api.bing.microsoft.com/v7.0/images/search"
+  static SEARCH_CC_API = "https://api.creativecommons.engineering/v1/images"
   
   constructor() {
     super()
   }
   
   /**
+   * Pack lists are Search implementations
+   */
+  async getPackList() {
+    this.assetsPacks = []
+    this.assetsPacks.push({ idx: 1, special:"bing", publisher: "Microsoft", pubWebsite: "https://microsoft.com", name: "Bing Search v7.0", url: "http://bing.com/", license: "depends", isRemote: true })
+    this.assetsPacks.push({ idx: 2, special:"cc", publisher: "Creative Commons", pubWebsite: "https://opensource.creativecommons.org/", name: "CC Search v1.0", url: "https://opensource.creativecommons.org/archives/cc-search/", license: "depends", isRemote: true })    
+    return duplicate(this.assetsPacks)
+  }
+  
+  /**
+  /* Bing Search implementation
+   */
+  async searchBing(searchTerms, bingKey) {
+    // execute search
+    let header = {
+      method: "GET",
+      headers: {"Ocp-Apim-Subscription-Key" : bingKey},
+    }
+    const params = new URLSearchParams({
+      q: searchTerms,
+      //imageType: "photo",
+      count: 150
+    })
+    
+    const response = await fetch(`${MoulinetteImageSearch.SEARCH_BING_API}?${params}`, header).catch(function(e) {
+      console.log(`MoulinetteClient | Cannot establish connection to server ${MoulinetteImageSearch.SEARCH_BING_API}`, e)
+    });
+  
+    if( !response || response.status != 200 ) {
+      console.error("MoulinetteImageSearch | Invalid response from Bing API", response)
+      return [];
+    }
+    let data = await response.json()
+    
+    let results = []
+    data.value.forEach( r => results.push({ src: "Microsoft Bing", name: r.name, thumb: r.thumbnailUrl, url: r.contentUrl, page: r.hostPageUrl, width: r.width, height: r.height, format: r.encodingFormat}));
+    return results
+  }
+  
+  /**
+  /* CreativeCommons Search implementation
+   */
+  async searchCC(searchTerms) {
+    // execute search
+    let header = {
+      method: "GET"
+    }
+    const params = new URLSearchParams({
+      q: searchTerms,
+      page_size: 150
+    })
+    
+    const response = await fetch(`${MoulinetteImageSearch.SEARCH_CC_API}?${params}`, header).catch(function(e) {
+      console.log(`MoulinetteClient | Cannot establish connection to server ${MoulinetteImageSearch.SEARCH_CC_API}`, e)
+    });
+  
+    if( !response || response.status != 200 ) {
+      console.error("MoulinetteImageSearch | Invalid response from CreativeCommons API", response)
+      return [];
+    }
+    let data = await response.json()
+    
+    let results = []
+    data.results.forEach( r => {
+      const format = r.url.substring(r.url.lastIndexOf(".")+1)
+      results.push({ src: "Creative Commons", name: r.title, thumb: r.thumbnail, url: r.url, license: r.license, licenseUrl: r.license_url, page: r.foreign_landing_url, noSize: true, format: format })
+    });
+    return results
+  }
+  
+  /**
    * Implements getAssetList
    */
-  async getAssetList(searchTerms) {
+  async getAssetList(searchTerms, packId) {
     let assets = []
-    
+ 
+    let pack = packId ? this.assetsPacks.find(p => p.idx == packId) : null
     const bingKey = game.settings.get("moulinette-imagesearch", "bing-key")
-    if(!bingKey || bingKey.length == 0) {
+    if(pack && pack.special == "bing" && (!bingKey | bingKey.length == 0)) {
       assets.push(`<div class="error">${game.i18n.localize("mtte.noBingKey")}</div>`)
       return assets;
     }
@@ -29,31 +102,15 @@ export class MoulinetteImageSearch extends game.moulinette.applications.Moulinet
     
     console.log("Moulinette ImageSearch | Searching images... " + searchTerms)
     
-    // execute search
-    let header = {
-      method: "GET",
-      headers: {"Ocp-Apim-Subscription-Key" : bingKey},
-    }
-    const params = new URLSearchParams({
-      q: searchTerms,
-      imageType: "photo",
-      count: 150
-    })
-    
-    const response = await fetch(`${MoulinetteImageSearch.SEARCH_API}?${params}`, header).catch(function(e) {
-      console.log(`MoulinetteClient | Cannot establish connection to server ${MoulinetteImageSearch.SEARCH_API}`, e)
-    });
-  
-    if( !response || response.status != 200 ) {
-      console.error("MoulinetteImageSearch | Invalid response from Bing API", response)
-      return assets;
-    }
-    
-    
-    let data = await response.json()
-    
     this.searchResults = []
-    data.value.forEach( r => this.searchResults.push({ name: r.name, thumb: r.thumbnailUrl, url: r.contentUrl, page: r.hostPageUrl, width: r.width, height: r.height, format: r.encodingFormat}));
+    if((!pack || pack.special == "bing") && bingKey && bingKey.length > 0) {
+      this.searchResults.push(...await this.searchBing(searchTerms, bingKey))
+    }
+    if(!pack || pack.special == "cc") {
+      this.searchResults.push(...await this.searchCC(searchTerms))
+    }
+    
+    this.searchResults.sort((a,b) => 0.5 - Math.random())
     
     let html = ""
     let idx = 0;
@@ -132,11 +189,13 @@ export class MoulinetteImageSearch extends game.moulinette.applications.Moulinet
     // invalid action
     if(!this.searchResults || idx < 0 || idx > this.searchResults.length) return
           
+    const timestamp =  new Date().getTime();
     const image = this.searchResults[idx-1]
     const imageName = `${image.name}`
-    const imageFileName = image.name.replace(/[\W_]+/g,"-").replace(".","") + "." + image.format
+    let imageFileName = image.name.replace(/[\W_]+/g,"-").replace(".","")
+    imageFileName = (imageFileName.length > 30 ? imageFileName.substring(0, 30) : imageFileName) + "-" + timestamp + "." + image.format
     const filePath = game.moulinette.applications.MoulinetteFileUtil.getBaseURL() + "moulinette/images/search/" + imageFileName
-
+    
     // download & upload image
     const headers = { method: "POST", headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({ url: image.url }) }
     fetch(game.moulinette.applications.MoulinetteClient.SERVER_URL + "/search/download", headers).catch(function(e) {
@@ -144,7 +203,7 @@ export class MoulinetteImageSearch extends game.moulinette.applications.Moulinet
       console.log(`Moulinette | Cannot download image ${image.url}`, e)
       return;
     }).then( res => {
-      res.blob().then( blob => game.moulinette.applications.MoulinetteFileUtil.upload(new File([blob], imageFileName, { type: blob.type, lastModified: new Date() }), imageFileName, "moulinette/images/", `moulinette/images/search/`, false) )
+      res.blob().then( blob => game.moulinette.applications.MoulinetteFileUtil.upload(new File([blob], imageFileName, { type: blob.type, lastModified: new Date() }), imageFileName, "moulinette/images", `moulinette/images/search`, false) )
     });
 
     let dragData = {}
