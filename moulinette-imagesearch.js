@@ -18,10 +18,8 @@ Hooks.once("init", async function () {
  */
 Hooks.once("ready", async function () {
   if (game.user.isGM) {
-    // create default home folder for game icons
-    await game.moulinette.applications.MoulinetteFileUtil.createFolderIfMissing(".", "moulinette");
-    await game.moulinette.applications.MoulinetteFileUtil.createFolderIfMissing("moulinette", "moulinette/images");
-    await game.moulinette.applications.MoulinetteFileUtil.createFolderIfMissing("moulinette/images", "moulinette/images/search");
+    // create default home folder for image search
+    await game.moulinette.applications.MoulinetteFileUtil.createFolderRecursive("moulinette/images/search");
     
     const moduleClass = (await import("./modules/moulinette-imagesearch.js")).MoulinetteImageSearch
     game.moulinette.forge.push({

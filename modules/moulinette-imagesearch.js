@@ -203,7 +203,7 @@ export class MoulinetteImageSearch extends game.moulinette.applications.Moulinet
       console.log(`Moulinette | Cannot download image ${image.url}`, e)
       return;
     }).then( res => {
-      res.blob().then( blob => game.moulinette.applications.MoulinetteFileUtil.upload(new File([blob], imageFileName, { type: blob.type, lastModified: new Date() }), imageFileName, "moulinette/images", `moulinette/images/search`, false) )
+      res.blob().then( blob => game.moulinette.applications.MoulinetteFileUtil.uploadFile(new File([blob], imageFileName, { type: blob.type, lastModified: new Date() }), imageFileName, `moulinette/images/search`, false) )
     });
 
     let dragData = {}

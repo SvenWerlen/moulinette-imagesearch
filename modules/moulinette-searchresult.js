@@ -31,7 +31,8 @@ export class MoulinetteSearchResult extends FormApplication {
   async _updateObject(event) {
     event.preventDefault();
 
-    const data = await this._downloadFile()
+    const timestamp =  new Date().getTime();
+    const data = await this._downloadFile(timestamp)
     if(!data) return;
 
     // create article if requested
@@ -43,6 +44,7 @@ export class MoulinetteSearchResult extends FormApplication {
   }
   
   _onDragStart(event) {
+    console.log("DragStrat Search Result")
     // module moulinette-tiles is required for supporting drag/drop
     if(!game.moulinette.applications.MoulinetteDropAsActor) {
       ui.notifications.error(game.i18n.localize("mtte.errorDragDropRequirements"));
@@ -50,9 +52,10 @@ export class MoulinetteSearchResult extends FormApplication {
       return;
     }
     
+    const timestamp =  new Date().getTime();
     const mode = game.settings.get("moulinette", "tileMode")
-    this._downloadFile();
-    const img = this._getImageDetails();
+    this._downloadFile(timestamp);
+    const img = this._getImageDetails(timestamp);
     const filepath = game.moulinette.applications.MoulinetteFileUtil.getBaseURL() + img.filepath
     
     let dragData = {}
@@ -84,19 +87,19 @@ export class MoulinetteSearchResult extends FormApplication {
     html.find(".thumb").css('background', `url(${this.data.thumb}) 50% 50% no-repeat`)
   }
   
-  _getImageDetails() {
+  _getImageDetails(timestamp) {
     let imageName = this.data.name
     if(!this.data.format) {
       this.data.format = ".jpg" // just a guess to avoid issue during upload
     }
-    const timestamp =  new Date().getTime();
+    
     let imageFileName = imageName.replace(/[\W_]+/g,"-").replace(".","")
     imageFileName = (imageFileName.length > 30 ? imageFileName.substring(0, 30) : imageFileName) + "-" + timestamp + "." + this.data.format
     
     return { name: imageName, filename: imageFileName, filepath: "moulinette/images/search/" + imageFileName }
   }
   
-  async _downloadFile() {
+  async _downloadFile(timestamp) {
     // download & upload image
     const headers = { method: "POST", headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({ url: this.data.url }) }
     const res = await fetch(game.moulinette.applications.MoulinetteClient.SERVER_URL + "/search/download", headers).catch(function(e) {
@@ -106,9 +109,9 @@ export class MoulinetteSearchResult extends FormApplication {
     });
     if(!res) return
     const blob = await res.blob()
-    const img = this._getImageDetails()
+    const img = this._getImageDetails(timestamp)
     
-    await game.moulinette.applications.MoulinetteFileUtil.upload(new File([blob], img.filename, { type: blob.type, lastModified: new Date() }), img.filename, "moulinette/images", `moulinette/images/search`, false)
+    await game.moulinette.applications.MoulinetteFileUtil.uploadFile(new File([blob], img.filename, { type: blob.type, lastModified: new Date() }), img.filename, `moulinette/images/search`, false)
     return img;
   }
   
