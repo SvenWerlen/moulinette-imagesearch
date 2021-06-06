@@ -12,6 +12,8 @@ export class MoulinetteImageSearch extends game.moulinette.applications.Moulinet
     super()
   }
   
+  supportsModes() { return false }
+  
   /**
    * Pack lists are Search implementations
    */
