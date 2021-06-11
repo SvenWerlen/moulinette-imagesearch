@@ -193,38 +193,36 @@ export class MoulinetteImageSearch extends game.moulinette.applications.Moulinet
           
     const timestamp =  new Date().getTime();
     const image = this.searchResults[idx-1]
-    const imageName = `${image.name}`
     let imageFileName = image.name.replace(/[\W_]+/g,"-").replace(".","")
     imageFileName = (imageFileName.length > 30 ? imageFileName.substring(0, 30) : imageFileName) + "-" + timestamp + "." + image.format
-    const filePath = game.moulinette.applications.MoulinetteFileUtil.getBaseURL() + "moulinette/images/search/" + imageFileName
     
-    // download & upload image
-    const headers = { method: "POST", headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({ url: image.url }) }
-    fetch(game.moulinette.applications.MoulinetteClient.SERVER_URL + "/search/download", headers).catch(function(e) {
-      ui.notifications.error(game.i18n.localize("mtte.errorDownloadTimeout"));
-      console.log(`Moulinette | Cannot download image ${image.url}`, e)
-      return;
-    }).then( res => {
-      res.blob().then( blob => game.moulinette.applications.MoulinetteFileUtil.uploadFile(new File([blob], imageFileName, { type: blob.type, lastModified: new Date() }), imageFileName, `moulinette/images/search`, false) )
-    });
-
+    // create fake tile
+    const tile = {
+      filename: imageFileName, 
+      type: "img", 
+      sas: "", 
+      search: image
+    }
+    
     let dragData = {}
     if(mode == "tile") {
       dragData = {
         type: "Tile",
-        img: filePath,
+        tile: tile,
+        pack: {},
         tileSize: 100
       };
     } else if(mode == "article") {
       dragData = {
         type: "JournalEntry",
-        name: imageName,
-        img: filePath
+        tile: tile,
+        pack: {}
       };
     } else if(mode == "actor") {
       dragData = {
         type: "Actor",
-        img: filePath
+        tile: tile,
+        pack: {}
       };
     }
     

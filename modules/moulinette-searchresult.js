@@ -6,6 +6,20 @@ export class MoulinetteSearchResult extends FormApplication {
   constructor(data) {
     super()
     this.data = data;
+    
+    const mode = game.settings.get("moulinette", "tileMode")
+    const timestamp =  new Date().getTime();
+    const image = data
+    let imageFileName = image.name.replace(/[\W_]+/g,"-").replace(".","")
+    imageFileName = (imageFileName.length > 30 ? imageFileName.substring(0, 30) : imageFileName) + "-" + timestamp + "." + image.format
+    
+    // create fake tile
+    this.tile = {
+      filename: imageFileName, 
+      type: "img", 
+      sas: "", 
+      search: image
+    }
   }
   
   static get defaultOptions() {
@@ -30,21 +44,21 @@ export class MoulinetteSearchResult extends FormApplication {
   
   async _updateObject(event) {
     event.preventDefault();
-
-    const timestamp =  new Date().getTime();
-    const data = await this._downloadFile(timestamp)
-    if(!data) return;
-
+    
+    // Download asset
+    const data = { tile: this.tile }
+    const cTiles = await import("../../moulinette-tiles/modules/moulinette-tiles.js")
+    await cTiles.MoulinetteTiles.downloadAsset(data)
+    
     // create article if requested
     if(event.submitter.className == "createArticle") {
       ui.journal.activate() // give focus to journal
-      const article = await JournalEntry.create( {name: data.name, img: game.moulinette.applications.MoulinetteFileUtil.getBaseURL() + data.filepath} )
+      const article = await JournalEntry.create( {name: this.data.name, img: data.img} )
       article.sheet.render(true)
     }
   }
   
   _onDragStart(event) {
-    console.log("DragStrat Search Result")
     // module moulinette-tiles is required for supporting drag/drop
     if(!game.moulinette.applications.MoulinetteDropAsActor) {
       ui.notifications.error(game.i18n.localize("mtte.errorDragDropRequirements"));
@@ -52,31 +66,30 @@ export class MoulinetteSearchResult extends FormApplication {
       return;
     }
     
-    const timestamp =  new Date().getTime();
     const mode = game.settings.get("moulinette", "tileMode")
-    this._downloadFile(timestamp);
-    const img = this._getImageDetails(timestamp);
-    const filepath = game.moulinette.applications.MoulinetteFileUtil.getBaseURL() + img.filepath
     
     let dragData = {}
     if(mode == "tile") {
       dragData = {
         type: "Tile",
-        img: filepath,
+        tile: this.tile,
+        pack: {},
         tileSize: 100
       };
     } else if(mode == "article") {
       dragData = {
         type: "JournalEntry",
-        name: img.name,
-        img: filepath
+        tile: this.tile,
+        pack: {}
       };
     } else if(mode == "actor") {
       dragData = {
         type: "Actor",
-        img: filepath
+        tile: this.tile,
+        pack: {}
       };
-    }    
+    }
+    
     dragData.source = "mtte"
     event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
   }
@@ -85,34 +98,6 @@ export class MoulinetteSearchResult extends FormApplication {
     super.activateListeners(html);
     this.bringToTop()
     html.find(".thumb").css('background', `url(${this.data.thumb}) 50% 50% no-repeat`)
-  }
-  
-  _getImageDetails(timestamp) {
-    let imageName = this.data.name
-    if(!this.data.format) {
-      this.data.format = ".jpg" // just a guess to avoid issue during upload
-    }
-    
-    let imageFileName = imageName.replace(/[\W_]+/g,"-").replace(".","")
-    imageFileName = (imageFileName.length > 30 ? imageFileName.substring(0, 30) : imageFileName) + "-" + timestamp + "." + this.data.format
-    
-    return { name: imageName, filename: imageFileName, filepath: "moulinette/images/search/" + imageFileName }
-  }
-  
-  async _downloadFile(timestamp) {
-    // download & upload image
-    const headers = { method: "POST", headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({ url: this.data.url }) }
-    const res = await fetch(game.moulinette.applications.MoulinetteClient.SERVER_URL + "/search/download", headers).catch(function(e) {
-      ui.notifications.error(game.i18n.localize("mtte.errorDownloadTimeout"));
-      console.log(`Moulinette | Cannot download image ${svg}`, e)
-      return null;
-    });
-    if(!res) return
-    const blob = await res.blob()
-    const img = this._getImageDetails(timestamp)
-    
-    await game.moulinette.applications.MoulinetteFileUtil.uploadFile(new File([blob], img.filename, { type: blob.type, lastModified: new Date() }), img.filename, `moulinette/images/search`, false)
-    return img;
   }
   
 }
