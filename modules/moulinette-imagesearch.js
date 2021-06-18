@@ -209,20 +209,20 @@ export class MoulinetteImageSearch extends game.moulinette.applications.Moulinet
       dragData = {
         type: "Tile",
         tile: tile,
-        pack: {},
+        pack: { publisher: image.src, name: "Results" },
         tileSize: 100
       };
     } else if(mode == "article") {
       dragData = {
         type: "JournalEntry",
         tile: tile,
-        pack: {}
+        pack: { publisher: image.src, name: "Results" }
       };
     } else if(mode == "actor") {
       dragData = {
         type: "Actor",
         tile: tile,
-        pack: {}
+        pack: { publisher: image.src, name: "Results" }
       };
     }
     
