@@ -48,12 +48,13 @@ export class MoulinetteSearchResult extends FormApplication {
     // Download asset
     const data = { tile: this.tile }
     const cTiles = await import("../../moulinette-tiles/modules/moulinette-tiles.js")
+    const folder = await cTiles.MoulinetteTiles.getOrCreateArticleFolder(this.data.src, "Results")
     await cTiles.MoulinetteTiles.downloadAsset(data)
     
     // create article if requested
     if(event.submitter.className == "createArticle") {
       ui.journal.activate() // give focus to journal
-      const article = await JournalEntry.create( {name: this.data.name, img: data.img} )
+      const article = await JournalEntry.create( {name: this.data.name, img: data.img, folder: folder._id } )
       article.sheet.render(true)
     }
   }
@@ -73,20 +74,20 @@ export class MoulinetteSearchResult extends FormApplication {
       dragData = {
         type: "Tile",
         tile: this.tile,
-        pack: {},
+        pack: { publisher: this.data.src, name: "Results" },
         tileSize: 100
       };
     } else if(mode == "article") {
       dragData = {
         type: "JournalEntry",
         tile: this.tile,
-        pack: {}
+        pack: { publisher: this.data.src, name: "Results" }
       };
     } else if(mode == "actor") {
       dragData = {
         type: "Actor",
         tile: this.tile,
-        pack: {}
+        pack: { publisher: this.data.src, name: "Results" }
       };
     }
     
