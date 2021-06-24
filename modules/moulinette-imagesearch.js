@@ -130,9 +130,10 @@ export class MoulinetteImageSearch extends game.moulinette.applications.Moulinet
   async getFooter() {
     if(game.moulinette.applications.MoulinetteDropAsActor) {
       const mode = game.settings.get("moulinette", "tileMode")
-      return `<div class="options">
-        ${game.i18n.localize("mtte.dropmode")} <i class="fas fa-question-circle" title="${game.i18n.localize("mtte.dropmodeToolTip")}"></i> 
-        <input class="dropmode" type="radio" name="mode" value="tile" ${mode == "tile" ? "checked" : ""}> ${game.i18n.localize("mtte.tile")}
+      const compact = game.settings.get("moulinette-core", "uiMode") == "compact"
+      return '<div class="options">' +
+        (compact ? "" : `${game.i18n.localize("mtte.dropmode")} <i class="fas fa-question-circle" title="${game.i18n.localize("mtte.dropmodeToolTip")}"></i>`) +
+        `<input class="dropmode" type="radio" name="mode" value="tile" ${mode == "tile" ? "checked" : ""}> ${game.i18n.localize("mtte.tile")}
         <input class="dropmode" type="radio" name="mode" value="article" ${mode == "article" ? "checked" : ""}> ${game.i18n.localize("mtte.article")}
         <input class="dropmode" type="radio" name="mode" value="actor" ${mode == "actor" ? "checked" : ""}> ${game.i18n.localize("mtte.actor")}
       </div>`
