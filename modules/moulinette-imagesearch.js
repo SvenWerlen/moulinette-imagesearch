@@ -251,6 +251,11 @@ export class MoulinetteImageSearch extends game.moulinette.applications.Moulinet
             }
         });
       }
+
+      const ext = text.split('.').pop().toLowerCase();
+      if(!["png","jpg","jpeg","webp","gif","svg"].includes(ext)) {
+        return console.error('Moulinette ImageSearch | Invalid image format from URL: ', text);
+      }
       
       const dateAsString = new Date().toLocaleDateString("en-US", { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' })
       const data = {
@@ -260,6 +265,9 @@ export class MoulinetteImageSearch extends game.moulinette.applications.Moulinet
         page: text,
         thumb: text,
         url: text,
+        format: ext,
+        src: 'Clipboard',
+
       }
       new MoulinetteSearchResult(data).render(true)
     }
