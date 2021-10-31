@@ -234,9 +234,12 @@ export class MoulinetteImageSearch extends game.moulinette.applications.Moulinet
   
   async onShortcut(type) {
     if(type == "paste") {
-      let text = await navigator.clipboard.readText().catch(err => {
-        console.error('Moulinette ImageSearch | Failed to read clipboard contents: ', err);
-      });
+      let text = ""
+      if(navigator.clipboard) {
+        text = await navigator.clipboard.readText().catch(err => {
+          console.error('Moulinette ImageSearch | Failed to read clipboard contents: ', err);
+        });
+      }
       const content = `<p>${game.i18n.localize("mtte.enterImageURLDescription")}</p>
         <div class="form-group"><label><b>${game.i18n.localize("mtte.imageURL")}</b></label>
         <label><input class="imageURL" type="text" name="imageURL" placeholder="https://..."></label></div><br/>`
