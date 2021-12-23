@@ -6,7 +6,7 @@ import { MoulinetteSearchResult } from "./moulinette-searchresult.js"
 export class MoulinetteImageSearch extends game.moulinette.applications.MoulinetteForgeModule {
 
   static SEARCH_BING_API = "https://api.bing.microsoft.com/v7.0/images/search"
-  static SEARCH_CC_API = "https://api.creativecommons.engineering/v1/images"
+  static SEARCH_CC_API = "https://api.openverse.engineering/v1/images"
   
   constructor() {
     super()
@@ -67,7 +67,7 @@ export class MoulinetteImageSearch extends game.moulinette.applications.Moulinet
       page_size: 150
     })
     
-    const response = await fetch(`${MoulinetteImageSearch.SEARCH_CC_API}?${params}`, header).catch(function(e) {
+    const response = await fetch(`${MoulinetteImageSearch.SEARCH_CC_API}/?format=json&${params}`, header).catch(function(e) {
       console.log(`MoulinetteClient | Cannot establish connection to server ${MoulinetteImageSearch.SEARCH_CC_API}`, e)
     });
   
