@@ -24,6 +24,7 @@ Hooks.once("ready", async function () {
     const moduleClass = (await import("./modules/moulinette-imagesearch.js")).MoulinetteImageSearch
     game.moulinette.forge.push({
       id: "imagesearch",
+      layer: "notes",
       icon: "fas fa-search",
       name: game.i18n.localize("mtte.imageSearch"),
       description: game.i18n.localize("mtte.imageSearchDescription"),
