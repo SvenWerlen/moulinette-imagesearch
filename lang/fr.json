@@ -15,6 +15,8 @@
   "mtte.enterImageURLDescription": "Cette fonction vous permet d'importer une image directement à partir d'une URL (ex: Google Images). Moulinette n'a pas été capable d'extraire une adresse d'image valide de votre presse-papier. Veuillez en spécifier une ci-dessous.",
   "mtte.errorDragDropRequirements": "Les fonctionalités de Glisser-Déposer requièrent le sous-module 'Moulinette Tiles'",
   "mtte.fromClipboard": "Depuis presse-papier {date}",
+  "mtte.howto": "Aide",
+  "mtte.howtoToolTip": "Accéder aux rubriques d'aide",
   "mtte.imageFrom": "Image de",
   "mtte.imageSearch": "Rech. image",
   "mtte.imageSearchDescription": "Instructions : rechercher et cliquer pour action",

@@ -15,6 +15,8 @@
   "mtte.enterImageURLDescription": "This feature lets you import an image from a URL (ex: Google Images). Moulinette has not been able to extract a valid image URL from your clipboard. Please specify it below.",
   "mtte.errorDragDropRequirements": "Drag & Drop capability requires submodule 'Moulinette Tiles'",
   "mtte.fromClipboard": "From clipboard {date}",
+  "mtte.howto": "Help",
+  "mtte.howtoToolTip": "See the available documentation (dynamic).",
   "mtte.imageFrom": "Image from",
   "mtte.imageSearch": "Image search",
   "mtte.imageSearchDescription": "Instructions : search then click for action",

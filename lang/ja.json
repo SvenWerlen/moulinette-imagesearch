@@ -15,6 +15,8 @@
   "mtte.enterImageURLDescription": "この機能を使うとURL（Google画像等）のインポートができます。クリップボードから有効な画像が引き出せませんでした、改めてURLを指定してください。",
   "mtte.errorDragDropRequirements": "ドラッグ＆ドロップの機能を利用するには'Moulinette Tiles'が必要です。",
   "mtte.fromClipboard": "{date}のクリップボードから",
+  "mtte.howto": "ヘルプ",
+  "mtte.howtoToolTip": "使い方：新たな画像・タイルのインストール方法",
   "mtte.imageFrom": "画像元",
   "mtte.imageSearch": "画像検索",
   "mtte.imageSearchDescription": "使い方：検索してクリックしてください。",

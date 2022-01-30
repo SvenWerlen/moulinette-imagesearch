@@ -29,12 +29,14 @@ Hooks.once("ready", async function () {
       name: game.i18n.localize("mtte.imageSearch"),
       description: game.i18n.localize("mtte.imageSearchDescription"),
       instance: new moduleClass(),
-      actions: [],
+      actions: [
+        {id: "howto", icon: "fas fa-question-circle" ,name: game.i18n.localize("mtte.howto"), help: game.i18n.localize("mtte.howtoToolTip") }
+      ],
       shortcuts: [{
         id: "paste", 
         name: game.i18n.localize("mtte.pasteURL"),
         icon: "fas fa-clipboard"
-      }]
+      }],
     })
     
     console.log("Moulinette ImageSearch | Module loaded")

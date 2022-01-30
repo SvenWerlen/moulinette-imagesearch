@@ -275,5 +275,12 @@ export class MoulinetteImageSearch extends game.moulinette.applications.Moulinet
       new MoulinetteSearchResult(data).render(true)
     }
   }
-  
+
+  async onAction(classList) {
+    // ACTION - HELP / HOWTO
+    if(classList.contains("howto")) {
+      new game.moulinette.applications.MoulinetteHelp("search").render(true)
+    }
+  }
+
 }
