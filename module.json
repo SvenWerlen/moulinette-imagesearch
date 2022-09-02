@@ -32,6 +32,6 @@
   "url": "https://github.com/SvenWerlen/moulinette-imagesearch",
   "download": "https://github.com/SvenWerlen/moulinette-imagesearch/archive/v-3.1.1.zip",
   "manifest": "https://raw.githubusercontent.com/SvenWerlen/moulinette-imagesearch/master/module.json",
-  "minimumCoreVersion": "9",
-  "compatibleCoreVersion": "9"
+  "minimumCoreVersion": "10",
+  "compatibleCoreVersion": "10"
 }
