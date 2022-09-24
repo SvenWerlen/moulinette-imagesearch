@@ -3,9 +3,36 @@ Hooks.once("init", async function () {
   console.log("Moulinette ImageSearch | Init") 
   game.settings.register("moulinette", "tileMode", { scope: "world", config: false, type: String, default: "tile" })
   
+  game.settings.register("moulinette-imagesearch", "openverse-enabled", {
+    name: game.i18n.localize("mtte.configOpenverseEnabled"),
+    hint: game.i18n.localize("mtte.configOpenverseEnabledHint"),
+    scope: "world",
+    config: true,
+    default: true,
+    type: Boolean
+  });
+
   game.settings.register("moulinette-imagesearch", "bing-key", {
     name: game.i18n.localize("mtte.configBingKey"), 
     hint: game.i18n.localize("mtte.configBingKeyHint"), 
+    scope: "world",
+    config: true,
+    default: "",
+    type: String
+  });
+
+  game.settings.register("moulinette-imagesearch", "google-key", {
+    name: game.i18n.localize("mtte.configGoogleKey"),
+    hint: game.i18n.localize("mtte.configGoogleKeyHint"),
+    scope: "world",
+    config: true,
+    default: "",
+    type: String
+  });
+
+  game.settings.register("moulinette-imagesearch", "google-engine-id", {
+    name: game.i18n.localize("mtte.configGoogleEngineId"),
+    hint: game.i18n.localize("mtte.configGoogleEngineIdHint"),
     scope: "world",
     config: true,
     default: "",

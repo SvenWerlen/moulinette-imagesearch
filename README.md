@@ -11,13 +11,28 @@ This is a submodule for [Moulinette Core](https://github.com/SvenWerlen/moulinet
 ## Search image and generate article
 
 You need images to enrich your game/campaign ?
-* Search using <a href="https://www.bing.com" target="_blank">bing.com</a> engine
+* Search using <a href="https://www.bing.com" target="_blank">Microsoft Bing</a>, <a href="https://www.google.com" target="_blank">Google Search</a> or <a href="https://search.openverse.engineering/" target="_blank">Openverse Search</a> engines.
 * Preview the image
 * Download or generate a journal article
 * Forge!
 
 ![Image search on Bing](docs/img/search-bing.jpg)
 <br>_(Images on the screenshot are from [Microsoft Bing](https://www.bing.com) search engine. Images are publicly available but their license varies.)_
+
+## <a name="configure"/>Generate your own API key and Engine ID for Google Search
+
+The module requires a valid API key and Engine ID for using Google Search. You'll have to create a Google Cloud account and a create a new project. The 100 first search queries per day are free. However, Moulinette always executes 3 queries in order to get 30 results. That means that only the first 33 moulinette searches per day will be free while using Google Search.
+
+* Visit https://console.developers.google.com and create a project.
+* Visit https://console.developers.google.com/apis/library/customsearch.googleapis.com and enable "Custom Search API" for your project.
+* Visit https://console.developers.google.com/apis/credentials and generate API key credentials for your project.
+* Copy the API key and paste it as Google Search API key (module's configuration)
+* Visit https://cse.google.com/cse/all and in the web form where you create/edit your custom search engine enable "Image search" option and for "Sites to search" option select "Search the entire web but emphasize included sites".
+* Copy the Search engine ID and paste it as Google Search Engine ID (module's configuration)
+* Voilà!
+
+![Configure Google Search](docs/img/configure-google-api.jpg)
+![Configure Google Search](docs/img/configure-google-engine.jpg)
 
 ## <a name="configure"/>Generate your own API key for Bing Search
 
@@ -39,7 +54,7 @@ The following steps assume that you have a basic undestanding of Microsoft Azure
 * In Foundry VTT, under "Configure Settings", specify your key for the "Bing Search API key"
 * Voilà!
 
-![Image search on Bing](docs/img/configure-bing.jpg)
+![Configure Bing Search](docs/img/configure-bing.jpg)
 
 ## <a name="install"/>Install the module
 
