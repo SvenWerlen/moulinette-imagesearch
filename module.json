@@ -39,7 +39,16 @@
       {
         "id": "moulinette-core",
         "type": "module",
-        "compatibility": {}
+        "compatibility": {
+          "minimum": "10.2.0"
+        }
+      },
+      {
+        "id": "moulinette-tiles",
+        "type": "module",
+        "compatibility": {
+          "minimum": "10.3.3"
+        }
       }
     ]
   },

@@ -20,8 +20,8 @@ export class MoulinetteImageSearch extends game.moulinette.applications.Moulinet
    */
   async getPackList() {
     this.assetsPacks = []
-    this.assetsPacks.push({ idx: 3, special:"google", publisher: "Google", pubWebsite: "https://developers.google.com/custom-search/", name: "Google Custom Search v1", url: "https://developers.google.com/custom-search/v1/overview", license: "depends", isRemote: true })
-    this.assetsPacks.push({ idx: 1, special:"bing", publisher: "Microsoft", pubWebsite: "https://microsoft.com", name: "Bing Search v7.0", url: "http://bing.com/", license: "depends", isRemote: true })
+    this.assetsPacks.push({ idx: 3, special:"google", publisher: "Google Search", pubWebsite: "https://developers.google.com/custom-search/", name: "Google Custom Search v1", url: "https://developers.google.com/custom-search/v1/overview", license: "depends", isRemote: true })
+    this.assetsPacks.push({ idx: 1, special:"bing", publisher: "Microsoft Bing", pubWebsite: "https://microsoft.com", name: "Bing Search v7.0", url: "http://bing.com/", license: "depends", isRemote: true })
     this.assetsPacks.push({ idx: 2, special:"cc", publisher: "Creative Commons", pubWebsite: "https://opensource.creativecommons.org/", name: "CC Search v1.0", url: "https://opensource.creativecommons.org/archives/cc-search/", license: "depends", isRemote: true })
     return duplicate(this.assetsPacks)
   }
@@ -152,28 +152,31 @@ export class MoulinetteImageSearch extends game.moulinette.applications.Moulinet
   /**
    * Implements getAssetList
    */
-  async getAssetList(searchTerms, packId) {
+  async getAssetList(searchTerms, packs, publisher) {
     let assets = []
  
+    const isBing = publisher == "Microsoft Bing"
+    const isGoogle = publisher == "Google Search"
+    const isCC = publisher == "Creative Commons"
+
     // error handling
-    let pack = packId ? this.assetsPacks.find(p => p.idx == packId) : null
     const bingKey = game.settings.get("moulinette-imagesearch", "bing-key")
-    if(pack && pack.special == "bing" && (!bingKey | bingKey.length == 0)) {
+    if( isBing && (!bingKey | bingKey.length == 0)) {
       assets.push(`<div class="error">${game.i18n.localize("mtte.noBingKey")}</div>`)
       return assets;
     }
     const googleKey = game.settings.get("moulinette-imagesearch", "google-key")
-    if(pack && pack.special == "google" && (!googleKey | googleKey.length == 0)) {
+    if(isGoogle && (!googleKey | googleKey.length == 0)) {
       assets.push(`<div class="error">${game.i18n.localize("mtte.noGoogleKey")}</div>`)
       return assets;
     }
     const googleEngineId = game.settings.get("moulinette-imagesearch", "google-engine-id")
-    if(pack && pack.special == "google" && (!googleEngineId | googleEngineId.length == 0)) {
+    if(isGoogle && (!googleEngineId | googleEngineId.length == 0)) {
       assets.push(`<div class="error">${game.i18n.localize("mtte.noGoogleEngine")}</div>`)
       return assets;
     }
     const openverseEnabled = game.settings.get("moulinette-imagesearch", "openverse-enabled")
-    if(pack && pack.special == "cc" && !openverseEnabled) {
+    if(isCC && !openverseEnabled) {
       assets.push(`<div class="error">${game.i18n.localize("mtte.openverseDisabled")}</div>`)
       return assets;
     }
@@ -185,13 +188,13 @@ export class MoulinetteImageSearch extends game.moulinette.applications.Moulinet
     console.log("Moulinette ImageSearch | Searching images... " + searchTerms)
     
     this.searchResults = []
-    if((!pack || pack.special == "bing") && bingKey && bingKey.length > 0) {
+    if((!publisher || isBing) && bingKey && bingKey.length > 0) {
       this.searchResults.push(...await this.searchBing(searchTerms, bingKey))
     }
-    if((!pack || pack.special == "google") && googleKey && googleKey.length > 0 && googleEngineId && googleEngineId.length > 0) {
+    if((!publisher || isGoogle) && googleKey && googleKey.length > 0 && googleEngineId && googleEngineId.length > 0) {
       this.searchResults.push(...await this.searchGoogle(searchTerms, googleKey, googleEngineId))
     }
-    if((!pack || pack.special == "cc") && openverseEnabled) {
+    if((!publisher || isCC) && openverseEnabled) {
       this.searchResults.push(...await this.searchCC(searchTerms))
     }
     
@@ -213,18 +216,87 @@ export class MoulinetteImageSearch extends game.moulinette.applications.Moulinet
    * Footer: Dropmode
    */
   async getFooter() {
-    if(game.moulinette.applications.MoulinetteDropAsActor) {
-      const mode = game.settings.get("moulinette", "tileMode")
-      const compact = game.settings.get("moulinette-core", "uiMode") == "compact"
-      return '<div class="options">' +
-        (compact ? "" : `${game.i18n.localize("mtte.dropmode")} <i class="fas fa-question-circle" title="${game.i18n.localize("mtte.dropmodeToolTip")}"></i>`) +
-        `<input class="dropmode" type="radio" name="mode" value="tile" ${mode == "tile" ? "checked" : ""}> ${game.i18n.localize("mtte.tile")}
-        <input class="dropmode" type="radio" name="mode" value="article" ${mode == "article" ? "checked" : ""}> ${game.i18n.localize("mtte.article")}
-        <input class="dropmode" type="radio" name="mode" value="actor" ${mode == "actor" ? "checked" : ""}> ${game.i18n.localize("mtte.actor")}
-      </div>`
-    } else {
-      return `<div class="options"><em>${game.i18n.localize("mtte.dropmodeDisabled")}</em></div>`
+    return `<div id="footerTiles"></div>`
+  }
+
+  /**
+   * Updates the footer
+   */
+  async updateFooter() {
+
+    // prepare the list of macros
+    const mode = game.settings.get("moulinette", "tileMode")
+    const macroCfg = game.settings.get("moulinette", "tileMacros")[mode] // should return a list of _ids
+    const compendium = game.settings.get("moulinette-tiles", "macroCompendium")
+    const macroIndex = compendium ? game.packs.get(compendium)?.index.values() : null
+    const macros = macroIndex ? Array.from(macroIndex).filter(m => macroCfg && macroCfg.includes(m._id)) : []
+
+    let macroText = "-"
+    if( macros.length == 1) {
+      macroText = macros[0].name
     }
+    else if( macros.length > 1) {
+      macroText = game.i18n.format("mtte.multiplesMacros", { count: macros.length})
+    }
+
+    const html = await renderTemplate("modules/moulinette-tiles/templates/search-footer.hbs", {
+      tileSize: game.settings.get("moulinette", "tileSize"),
+      dropAsTile: mode == "tile",
+      dropAsArticle: mode == "article",
+      dropAsActor: mode == "actor",
+      macros: macroText
+    })
+    this.html.find("#footerTiles").html(html)
+
+    // dropmode listener
+    this.html.find(".dropMode").click(event => {
+      // callback function for appying the results
+      const parent = this
+      const callback = async function (mode) {
+        mode = ["tile","article","actor"].includes(mode) ? mode : "tile"
+        await game.settings.set("moulinette", "tileMode", mode)
+        await parent.updateFooter()
+      }
+
+      const dialog = new game.moulinette.applications.MoulinetteOptions("dropmode", callback, { width: 100, height: "auto" })
+      dialog.position.left = event.pageX - dialog.position.width/2
+      dialog.position.top = event.pageY - 60 // is auto
+      dialog.render(true)
+    })
+
+    // tilesize listener
+    this.html.find(".tileSize").click(event => {
+      // callback function for appying the results
+      const parent = this
+      const callback = async function (size) {
+        await game.settings.set("moulinette", "tileSize", Number(size))
+        await parent.updateFooter()
+      }
+
+      const dialog = new game.moulinette.applications.MoulinetteOptions("tilesize", callback, { width: 250, height: "auto" })
+      dialog.position.left = event.pageX - dialog.position.width/2
+      dialog.position.top = event.pageY - 100 // is auto
+      dialog.render(true)
+    })
+
+    // macros listener
+    this.html.find(".macros").click(event => {
+      // callback function for appying the results
+      const parent = this
+      const callback = async function (macros) {
+        if(macros) {
+          const config = game.settings.get("moulinette", "tileMacros")
+          config[mode] = macros
+          await game.settings.set("moulinette", "tileMacros", config)
+          await parent.updateFooter()
+        }
+      }
+
+      const dialog = new game.moulinette.applications.MoulinetteOptions("macros", callback, { width: 450, height: 400, macros: macros.map(m => m._id) })
+      dialog.position.left = event.pageX - dialog.position.width/2
+      dialog.position.top = event.pageY - 100 // is auto
+      dialog.render(true)
+    })
   }
   
   
@@ -240,6 +312,9 @@ export class MoulinetteImageSearch extends game.moulinette.applications.Moulinet
     
     // when choose mode
     this.html.find(".options input").click(this._onChooseMode.bind(this))
+
+    // insert Footer
+    this.updateFooter()
   }
   
   
@@ -273,6 +348,7 @@ export class MoulinetteImageSearch extends game.moulinette.applications.Moulinet
     const div = event.currentTarget;
     const idx = div.dataset.idx;
     const mode = game.settings.get("moulinette", "tileMode")
+    const size = game.settings.get("moulinette", "tileSize")
     
     // invalid action
     if(!this.searchResults || idx < 0 || idx > this.searchResults.length) return
@@ -296,7 +372,7 @@ export class MoulinetteImageSearch extends game.moulinette.applications.Moulinet
         type: "Tile",
         tile: tile,
         pack: { publisher: image.src, name: "Results" },
-        tileSize: 100
+        tileSize: size
       };
     } else if(mode == "article") {
       dragData = {
