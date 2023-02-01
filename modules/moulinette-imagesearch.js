@@ -416,8 +416,10 @@ export class MoulinetteImageSearch extends game.moulinette.applications.Moulinet
         });
       }
 
-      const ext = text.split('.').pop().toLowerCase();
-      if(!["png","jpg","jpeg","webp","gif","svg"].includes(ext)) {
+      const re = /(?:\.([^.]+))?$/; // regular expression to extract extension
+      let ext =  re.exec(text.split("/").pop().split('?')[0])[1]
+      ext = ext ? ext : "jpg"
+      if(!["png","jpg","jpeg","webp","gif","svg"].includes(ext.toLowerCase())) {
         return console.error('Moulinette ImageSearch | Invalid image format from URL: ', text);
       }
       
