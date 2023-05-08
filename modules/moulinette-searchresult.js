@@ -54,7 +54,7 @@ export class MoulinetteSearchResult extends FormApplication {
     // create article if requested
     if(event.submitter.className == "createArticle") {
       ui.journal.activate() // give focus to journal
-      const article = await JournalEntry.create( {name: this.data.name, img: data.img, folder: folder._id } )
+      const article = await game.moulinette.applications.Moulinette.generateArticle(this.data.name, data.img, folder._id)
       article.sheet.render(true)
     }
   }
