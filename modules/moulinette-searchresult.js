@@ -50,6 +50,15 @@ export class MoulinetteSearchResult extends FormApplication {
     const cTiles = await import("../../moulinette-tiles/modules/moulinette-tiles.js")
     const folder = await cTiles.MoulinetteTiles.getOrCreateArticleFolder(this.data.src, "Results")
     await cTiles.MoulinetteTiles.downloadAsset(data)
+
+    // copy into the clipboard
+    navigator.clipboard.writeText(data.img).then(() => {
+      ui.notifications.info(game.i18n.localize("mtte.codeCopiedClipboardSuccess"))
+    })
+    .catch(() => {
+      ui.notifications.warn(game.i18n.localize("mtte.codeCopiedClipboardFail"))
+      console.log("Path to image is: " + data.img)
+    });
     
     // create article if requested
     if(event.submitter.className == "createArticle") {

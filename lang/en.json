@@ -1,6 +1,6 @@
 {
-  "mtte.actor": "Token",
-  "mtte.article": "Article",
+  "mtte.codeCopiedClipboardFail": "Code snippet couldn't be copied into your clipboard! Your browser doesn't support it or blocks it.",
+  "mtte.codeCopiedClipboardSuccess": "Code snippet successfully copied into your clipboard!",
   "mtte.configBingKey": "Bing Search API key",
   "mtte.configBingKeyHint": "You have to provide your own Bing Search API key. Check documentation for more details",
   "mtte.configGoogleEngineId": "Google Search Engine ID (cx)",
@@ -14,9 +14,6 @@
   "mtte.createArticleToolTip": "Generates an article based on the image",
   "mtte.downloadImage": "Download",
   "mtte.downloadImageToolTip": "Download image into Foundry VTT",
-  "mtte.dropmode": "Drop as",
-  "mtte.dropmodeDisabled": "Drag & drop disabled. Please install submodule \"Moulinette Tiles\" to enable it",
-  "mtte.dropmodeToolTip": "Choose what kind of asset will be generated",
   "mtte.enterImageURL": "Specify URL to image",
   "mtte.enterImageURLDescription": "This feature lets you import an image from a URL (ex: Google Images). Moulinette has not been able to extract a valid image URL from your clipboard. Please specify it below.",
   "mtte.errorDragDropRequirements": "Drag & Drop capability requires submodule 'Moulinette Tiles'",
@@ -28,6 +25,7 @@
   "mtte.imageSearchDescription": "Instructions : search then click for action",
   "mtte.imageSize": "Image size",
   "mtte.imageURL": "Image URL",
+  "mtte.multiplesMacros": "{count} macros selected",
   "mtte.noBingKey": "In order to search images, you first need to configure Bing Search API key",
   "mtte.noGoogleEngine": "In order to search images, you first need to configure Google Search Engine ID",
   "mtte.noGoogleKey": "In order to search images, you first need to configure Google Search API key",
@@ -35,6 +33,5 @@
   "mtte.pasteURL": "Import image from URL (and create article)",
   "mtte.searchBy": "Search provided by",
   "mtte.searchByCustom": "Image was manually provided (from Clipboard)",
-  "mtte.searchresult": "Search result",
-  "mtte.tile": "Tile"
+  "mtte.searchresult": "Search result"
 }
