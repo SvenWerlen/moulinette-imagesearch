@@ -1,7 +1,7 @@
 {
   "title": "Moulinette Image Search (module)",
   "description": "This module for Moulinette adds capabilities for searching images and generating articles on the fly.",
-  "version": "11.1.0",
+  "version": "12.0.0",
   "authors": [
     {
       "name": "Sven Werlen",
@@ -53,11 +53,11 @@
     ]
   },
   "url": "https://github.com/SvenWerlen/moulinette-imagesearch",
-  "download": "https://github.com/SvenWerlen/moulinette-imagesearch/archive/v-11.1.0.zip",
+  "download": "https://github.com/SvenWerlen/moulinette-imagesearch/archive/v-12.0.0.zip",
   "manifest": "https://raw.githubusercontent.com/SvenWerlen/moulinette-imagesearch/main/module.json",
   "compatibility": {
     "minimum": "10",
-    "verified": "11"
+    "verified": "12"
   },
   "id": "moulinette-imagesearch"
 }
